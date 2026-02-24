@@ -130,3 +130,59 @@ def count_records() -> int:
         conn.close()
 
 
+def keyword_search(
+    articles: list[str] | None = None,
+    chapters: list[str] | None = None,
+) -> list[dict[str, Any]]:
+    """
+    Tìm kiếm chunk chính xác theo Điều/Chương được đề cập trong câu hỏi.
+    Các chunk tìm được sẽ có similarity = 1.0 (ưu tiên tối đa).
+
+    Args:
+        articles: Danh sách số điều cần tìm, ví dụ ["2", "185"].
+        chapters: Danh sách số/tên chương cần tìm, ví dụ ["I", "2"].
+
+    Returns:
+        Danh sách chunk khớp, với similarity = 1.0.
+    """
+    if not articles and not chapters:
+        return []
+
+    conditions: list[str] = []
+    params: list[Any] = []
+
+    if articles:
+        placeholders = ", ".join(["%s"] * len(articles))
+        conditions.append(f"article::text IN ({placeholders})")
+        params.extend(articles)
+
+    if chapters:
+        or_parts = []
+        for ch in chapters:
+            or_parts.append("chapter ILIKE %s")
+            params.append(f"%{ch}%")
+        conditions.append(f"({' OR '.join(or_parts)})")
+
+    where_clause = " OR ".join(conditions)
+    sql = f"""
+        SELECT
+            id,
+            law_name, law_code, document_type, issuing_body, field,
+            chapter, article, article_name, clause, point, content,
+            1.0::float AS similarity
+        FROM law_documents
+        WHERE {where_clause}
+        ORDER BY article, clause;
+    """
+
+    conn = get_connection()
+    try:
+        cur = conn.cursor()
+        cur.execute(sql, params)
+        cols = [desc[0] for desc in cur.description]
+        rows = [dict(zip(cols, row)) for row in cur.fetchall()]
+        cur.close()
+        print(f"🔑 Keyword search: tìm thấy {len(rows)} chunk khớp chính xác.")
+        return rows
+    finally:
+        conn.close()

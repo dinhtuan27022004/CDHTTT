@@ -56,7 +56,7 @@ def init_db():
             -- RAG
             chunk_id    UUID,
             chunk_index INT,
-            embedding   VECTOR(1536)
+            embedding   VECTOR(1024)
         );
     """)
 

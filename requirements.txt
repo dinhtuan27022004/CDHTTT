@@ -13,3 +13,6 @@ langchain-text-splitters>=0.2.0
 # File parsers
 pdfplumber>=0.10.3
 python-docx>=1.1.0
+
+# Reranking
+sentence-transformers>=3.0.0

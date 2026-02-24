@@ -10,22 +10,6 @@ def render_chat_main() -> None:
 
     if "messages" not in st.session_state:
         st.session_state.messages = []          # [{"role", "content", "citations", "chunks", "error"}]
-    if "chat_topk" not in st.session_state:
-        st.session_state.chat_topk = 5
-
-    # ── Tiêu đề ──────────────────────────────────────────────────────────────
-    # Chỉ hiển thị khi chưa có tin nhắn (như trang chủ GPT)
-
-    # ── Cài đặt hội thoại (compact, trong expander) ──────────────────────────
-    with st.expander("⚙️ Cài đặt tìm kiếm", expanded=False):
-        st.session_state.chat_topk = st.slider(
-            "Số điều tham khảo (top-K)",
-            min_value=1, max_value=10,
-            value=st.session_state.chat_topk,
-        )
-
-    st.markdown("---")
-
     # ── Hiển thị lịch sử tin nhắn ────────────────────────────────────────────
     for msg in st.session_state.messages:
         role = msg["role"]
@@ -33,20 +17,37 @@ def render_chat_main() -> None:
         with st.chat_message(role, avatar="🙋" if role == "user" else "⚖️"):
             st.markdown(msg["content"])
 
-            # Citations chỉ hiển thị trong tin nhắn assistant
+            # Candidates TRƯỚC rerank
+            if role == "assistant" and msg.get("candidates"):
+                with st.expander(f"🔍 {len(msg['candidates'])} ứng viên Vector Search (trước Rerank)", expanded=False):
+                    for i, c in enumerate(msg["candidates"], 1):
+                        law   = c.get("law_name", "")
+                        art   = c.get("article", "")
+                        art_n = c.get("article_name", "")
+                        cls   = c.get("clause", "")
+                        sim   = c.get("similarity", 0)
+                        
+                        ref = law
+                        if art:
+                            ref += f" – Điều {art}"
+                            if art_n: ref += f" ({art_n})"
+                        if cls: ref += f", Khoản {cls}"
+                        
+                        st.markdown(
+                            f"**{i}.** `sim={sim:.2f}` &nbsp; **{ref}**\n\n{c.get('content', '')}",
+                            unsafe_allow_html=True,
+                        )
+
+            # Citations chỉ hiển thị trong tin nhắn assistant (Sau Rerank)
             if role == "assistant" and msg.get("citations"):
-                with st.expander(f"📚 Xem {len(msg['citations'])} điều luật tham khảo"):
+                with st.expander(f"📚 Xem {len(msg['citations'])} điều luật tham khảo (sau Rerank)"):
                     for i, (citation, chunk) in enumerate(
                         zip(msg["citations"], msg.get("chunks", [])), 1
                     ):
-                        preview = chunk.get("content", "")[:250]
-                        if len(chunk.get("content", "")) > 250:
-                            preview += "…"
+                        rerank_score = chunk.get("rerank_score")
+                        score_text = f"`rerank={rerank_score:.2f}`" if rerank_score is not None else ""
                         st.markdown(
-                            f"""<div class="citation-card">
-                                <div class="citation-title">{i}. {citation}</div>
-                                {preview}
-                            </div>""",
+                            f"**{i}.** {score_text} &nbsp; **{citation}**\n\n{chunk.get('content', '')}",
                             unsafe_allow_html=True,
                         )
 
@@ -71,11 +72,9 @@ def _handle_question(question: str) -> None:
     # Thêm tin nhắn user
     st.session_state.messages.append({"role": "user", "content": question})
 
-    top_k = st.session_state.get("chat_topk", 5)
-
     # Gọi controller (hiển thị spinner)
     with st.spinner("Đang tìm kiếm và tổng hợp…"):
-        result = ask_law_question(question, top_k=top_k)
+        result = ask_law_question(question)
 
     if result.get("error"):
         st.session_state.messages.append({
@@ -87,9 +86,10 @@ def _handle_question(question: str) -> None:
         })
     else:
         st.session_state.messages.append({
-            "role":      "assistant",
-            "content":   result["answer"],
-            "citations": result.get("citations", []),
-            "chunks":    result.get("chunks", []),
-            "error":     None,
+            "role":       "assistant",
+            "content":    result["answer"],
+            "citations":  result.get("citations", []),
+            "chunks":     result.get("chunks", []),
+            "candidates": result.get("candidates", []),
+            "error":      None,
         })

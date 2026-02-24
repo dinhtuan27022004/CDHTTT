@@ -160,7 +160,7 @@ def _build_chunks_from_hierarchy(
                     header_parts.append(chap_display)
                 
                 if art_num:      header_parts.append(f"Điều {art_num}")
-                if art_title:    header_parts.append(f"({art_title})")
+                if art_title:    header_parts.append(f"{art_title}")
                 if cls_num:      header_parts.append(f"Khoản {cls_num}")
                 
                 header = " ".join(header_parts)

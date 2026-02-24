@@ -82,12 +82,15 @@ def ingest_law_file(file_bytes: bytes, filename: str) -> dict[str, Any]:
 
     # 3. Embed + insert từng chunk
     total = len(chunks)
+    print(total)
     progress = st.progress(0, text=f"Đang xử lý 0/{total} chunks…")
 
     for i, chunk in enumerate(chunks):
         try:
             chunk["embedding"] = get_embedding(chunk["content"])
+            print(chunk["embedding"])
             insert_chunk(chunk)
+            
             inserted += 1
         except Exception as e:
             errors.append(f"[chunk {i}] {e}")
