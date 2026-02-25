@@ -1,0 +1,57 @@
+[
+    {
+        "id": 2344,
+        "law_name": "Bộ Luật Dân Sự",
+        "chapter": "Chương XV",
+        "article": 351,
+        "article_name": "Trách nhiệm dân sự do vi phạm nghĩa vụ",
+        "clause": 1,
+        "content": "Chương XV (QUY ĐỊNH CHUNG) Điều 351 Trách nhiệm dân sự do vi phạm nghĩa vụ Khoản 1:\n1. Bên có nghĩa vụ mà vi phạm nghĩa vụ thì phải chịu trách nhiệm dân sự đối với bên có quyền.\n\nVi phạm nghĩa vụ là việc bên có nghĩa vụ không thực hiện nghĩa vụ đúng thời hạn, thực hiện không đầy đủ nghĩa vụ hoặc thực hiện không đúng nội dung của nghĩa vụ.",
+        "similarity": 0.6496101811412103,
+        "rerank_score": 0.5372348427772522
+    },
+    {
+        "id": 1481,
+        "law_name": "Bộ Luật Dân Sự",
+        "chapter": "Chương I",
+        "article": 3,
+        "article_name": "Các nguyên tắc cơ bản của pháp luật dân sự",
+        "clause": 5,
+        "content": "Chương I (NHỮNG QUY ĐỊNH CHUNG) Điều 3 Các nguyên tắc cơ bản của pháp luật dân sự Khoản 5:\n5. Cá nhân, pháp nhân phải tự chịu trách nhiệm về việc không thực hiện hoặc thực hiện không đúng nghĩa vụ dân sự.",
+        "similarity": 0.6085255379363584,
+        "rerank_score": 0.44789808988571167
+    },
+    {
+        "id": 1515,
+        "law_name": "Bộ Luật Dân Sự",
+        "chapter": "Chương II",
+        "article": 13,
+        "article_name": "Bồi thường thiệt hại",
+        "clause": null,
+        "content": "Chương II (XÁC LẬP, THỰC HIỆN VÀ BẢO VỆ QUYỀN DÂN SỰ) Điều 13 Bồi thường thiệt hại:\nCá nhân, pháp nhân có quyền dân sự bị xâm phạm được bồi thường toàn bộ thiệt hại, trừ trường hợp các bên có thỏa thuận khác hoặc luật có quy định khác.",
+        "similarity": 0.6381710577556201,
+        "rerank_score": 0.3102075457572937
+    },
+    {
+        "id": 1505,
+        "law_name": "Bộ Luật Dân Sự",
+        "chapter": "Chương II",
+        "article": 10,
+        "article_name": "Giới hạn việc thực hiện quyền dân sự",
+        "clause": 2,
+        "content": "Chương II (XÁC LẬP, THỰC HIỆN VÀ BẢO VỆ QUYỀN DÂN SỰ) Điều 10 Giới hạn việc thực hiện quyền dân sự Khoản 2:\n2. Trường hợp cá nhân, pháp nhân không tuân thủ quy định tại khoản 1 Điều này thì Tòa án hoặc cơ quan có thẩm quyền khác căn cứ vào tính chất, hậu quả của hành vi vi phạm mà có thể không bảo vệ một phần hoặc toàn bộ quyền của họ, buộc bồi thường nếu gây thiệt hại và có thể áp dụng chế tài khác do luật quy định.",
+        "similarity": 0.6263257638410289,
+        "rerank_score": 0.28970640897750854
+    },
+    {
+        "id": 2934,
+        "law_name": "Bộ Luật Dân Sự",
+        "chapter": "Chương XX",
+        "article": 599,
+        "article_name": "Bồi thường thiệt hại do người dưới mười lăm tuổi, người mất năng lực hành vi dân sự gây ra trong thời gian trường học, bệnh viện, pháp nhân khác trực tiếp quản lý",
+        "clause": 2,
+        "content": "Chương XX (TRÁCH NHIỆM BỒI THƯỜNG THIỆT HẠI NGOÀI HỢP ĐỒNG) Điều 599 Bồi thường thiệt hại do người dưới mười lăm tuổi, người mất năng lực hành vi dân sự gây ra trong thời gian trường học, bệnh viện, pháp nhân khác trực tiếp quản lý Khoản 2:\n2. Người mất năng lực hành vi dân sự gây thiệt hại cho người khác trong thời gian bệnh viện, pháp nhân khác trực tiếp quản lý thì bệnh viện, pháp nhân khác phải bồi thường thiệt hại xảy ra.",
+        "similarity": 0.6171770507938573,
+        "rerank_score": 0.24607938528060913
+    }
+]

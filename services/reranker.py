@@ -2,17 +2,17 @@
 services/reranker.py – Reranking sử dụng BAAI/bge-reranker-v2-m3
 Chấm điểm lại các chunk sau Vector Search để cải thiện độ chính xác.
 """
-from __future__ import annotations
-from functools import lru_cache
 from typing import Any
 
 # Model name – có thể thay bằng model nhẹ hơn nếu cần tốc độ
 RERANKER_MODEL = "BAAI/bge-reranker-v2-m3"
 
 
-@lru_cache(maxsize=1)
+import streamlit as st
+
+@st.cache_resource
 def _get_reranker():
-    """Load model một lần duy nhất, cache lại để tái sử dụng."""
+    """Load model một lần duy nhất và giữ lại trong bộ nhớ Streamlit."""
     from sentence_transformers import CrossEncoder
     print(f"⏳ Đang tải Reranker model: {RERANKER_MODEL}...")
     model = CrossEncoder(RERANKER_MODEL, max_length=512)
@@ -51,9 +51,21 @@ def rerank(
     for chunk, score in zip(chunks, scores):
         chunk["rerank_score"] = float(score)
 
-    # Lọc theo ngưỡng và sắp xếp
+    # Sắp xếp toàn bộ theo điểm giảm dần
+    chunks.sort(key=lambda c: c["rerank_score"], reverse=True)
+
+    # Lấy các chunk đạt ngưỡng
     reranked = [c for c in chunks if c["rerank_score"] >= score_threshold]
-    reranked.sort(key=lambda c: c["rerank_score"], reverse=True)
+
+    # Cơ chế Fallback: Nếu quá ít kết quả đạt ngưỡng ( < 5), lấy ít nhất 5 cái tốt nhất
+    MIN_RESULTS = 5
+    if len(reranked) < MIN_RESULTS:
+        # Lấy top 5 từ danh sách đã sắp xếp (hoặc lấy hết nếu tổng < 5)
+        reranked = chunks[:max(MIN_RESULTS, len(reranked))]
+        # Lưu ý: lấy max(5, current) để đảm bảo nếu có 7 cái đạt ngưỡng thì vẫn lấy 7, 
+        # nhưng nếu chỉ có 2 cái đạt ngưỡng thì lấy 5. 
+        # Thực tế đơn giản hơn: lấy top 5 từ list chunks đã sort.
+        reranked = chunks[:MIN_RESULTS] if len(chunks) >= MIN_RESULTS else chunks
 
     if top_k is not None:
         return reranked[:top_k]

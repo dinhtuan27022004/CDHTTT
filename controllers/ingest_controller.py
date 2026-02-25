@@ -8,7 +8,7 @@ from typing import Any
 
 from services.file_parsers import parse_pdf, parse_docx
 from models.embedding import get_embedding
-from models.law_model import insert_chunk
+from models.law_model import insert_chunk, check_chunk_exists
 
 
 def _detect_file_type(filename: str) -> str:
@@ -46,10 +46,11 @@ def ingest_law_file(file_bytes: bytes, filename: str) -> dict[str, Any]:
         filename:   Tên file gốc (dùng để detect loại file và lấy law_name).
 
     Returns:
-        {"success": bool, "inserted": int, "errors": List[str], "message": str}
+        {"success": bool, "inserted": int, "skipped": int, "errors": List[str], "message": str}
     """
     errors: list[str] = []
     inserted = 0
+    skipped = 0
 
     # 1. Detect loại file
     file_type = _detect_file_type(filename)
@@ -57,6 +58,7 @@ def ingest_law_file(file_bytes: bytes, filename: str) -> dict[str, Any]:
         return {
             "success": False,
             "inserted": 0,
+            "skipped": 0,
             "errors": [f"Định dạng không hỗ trợ: {filename}"],
             "message": f"❌ Định dạng không hỗ trợ. Chỉ nhận PDF, DOCX.",
         }
@@ -68,6 +70,7 @@ def ingest_law_file(file_bytes: bytes, filename: str) -> dict[str, Any]:
         return {
             "success": False,
             "inserted": 0,
+            "skipped": 0,
             "errors": [str(e)],
             "message": f"❌ Lỗi đọc file: {e}",
         }
@@ -76,22 +79,29 @@ def ingest_law_file(file_bytes: bytes, filename: str) -> dict[str, Any]:
         return {
             "success": False,
             "inserted": 0,
+            "skipped": 0,
             "errors": ["Không tìm thấy nội dung hợp lệ trong file."],
             "message": "⚠️ File không có nội dung để import.",
         }
 
     # 3. Embed + insert từng chunk
     total = len(chunks)
-    print(total)
     progress = st.progress(0, text=f"Đang xử lý 0/{total} chunks…")
 
     for i, chunk in enumerate(chunks):
         try:
-            chunk["embedding"] = get_embedding(chunk["content"])
-            print(chunk["embedding"])
-            insert_chunk(chunk)
-            
-            inserted += 1
+            # Kiểm tra trùng lắp trước khi get embedding
+            if check_chunk_exists(
+                law_name=chunk.get("law_name"),
+                chapter=chunk.get("chapter"),
+                article=chunk.get("article"),
+                clause=chunk.get("clause")
+            ):
+                skipped += 1
+            else:
+                chunk["embedding"] = get_embedding(chunk["content"])
+                insert_chunk(chunk)
+                inserted += 1
         except Exception as e:
             errors.append(f"[chunk {i}] {e}")
 
@@ -100,13 +110,17 @@ def ingest_law_file(file_bytes: bytes, filename: str) -> dict[str, Any]:
     progress.empty()
 
     type_label = {"pdf": "PDF", "docx": "DOCX"}.get(file_type, file_type.upper())
-    message = f"✅ [{type_label}] Đã import {inserted}/{total} chunks thành công."
+    message = f"✅ [{type_label}] Đã xử lý {total} chunks."
+    message += f"\n- Thành công: {inserted}"
+    if skipped > 0:
+        message += f"\n- Bỏ qua (đã tồn tại): {skipped}"
     if errors:
-        message += f"\n⚠️ {len(errors)} chunk gặp lỗi."
+        message += f"\n- Lỗi: {len(errors)}"
 
     return {
         "success": len(errors) == 0,
         "inserted": inserted,
+        "skipped": skipped,
         "errors": errors,
         "message": message,
     }

@@ -1,0 +1,48 @@
+System: Bạn là **trợ lý pháp lý AI** chuyên về luật Việt Nam, hỗ trợ người dùng tra cứu, giải thích và áp dụng các quy định pháp luật một cách chính xác.
+
+## QUY TẮC BẮT BUỘC:
+1. **Chỉ** trả lời dựa trên nội dung trong phần CONTEXT được cung cấp. Tuyệt đối không tự suy diễn, bịa đặt hay dùng kiến thức ngoài context.
+2. **Luôn trích dẫn nguồn** theo định dạng: **Tên luật – Điều X, Khoản Y**. 
+   - **Lưu ý quan trọng**: Thông tin về Khoản luôn phải đi kèm thông tin về Điều (ví dụ: "Điều X - Khoản Y", không viết mỗi "Khoản Y").
+   - Nếu một câu trả lời dùng nhiều điều, liệt kê tất cả các nguồn.
+3. Nếu CONTEXT không đủ thông tin để trả lời toàn bộ câu hỏi người dùng, hãy phản hồi đúng một câu: *"Không tìm thấy trong dữ liệu luật hiện có."*
+4. Nếu CONTEXT chỉ đủ thông tin để trả lời một phần của câu hỏi người dùng, hãy trả lời phần có thể và phần còn lại thừa nhận không tìm thấy thông tin và tuyệt đối không bịa.
+4. Không suy luận về hậu quả pháp lý nếu context không đề cập rõ ràng.
+5. Đối với các câu hỏi ngắn hoặc chỉ chứa từ khóa (v dụ: "bạo lực gia đình", "trốn thuế"), hãy hiểu người dùng đang muốn hỏi về các quy định liên quan, các hành vi vi phạm và mức xử phạt (bị phạt như thế nào, có bị phạt không). Hãy trình bày tổng quan dựa trên CONTEXT.
+## PHONG CÁCH TRẢ LỜI:
+- Ngôn ngữ: **Tiếng Việt**, trang trọng, rõ ràng.
+- Cấu trúc: Dùng gạch đầu dòng hoặc đánh số nếu câu trả lời có nhiều ý.
+- Ngắn gọn, súc tích: Tránh lặp lại nội dung của câu hỏi.
+- Kết thúc mỗi câu trả lời bằng phần **📌 Nguồn tham khảo:**.
+Human: CONTEXT:
+[1] Bộ Luật Dân Sự – Điều 351 (Trách nhiệm dân sự do vi phạm nghĩa vụ), Khoản 1 (tương đồng: 0.65)
+Chương XV (QUY ĐỊNH CHUNG) Điều 351 Trách nhiệm dân sự do vi phạm nghĩa vụ Khoản 1:
+1. Bên có nghĩa vụ mà vi phạm nghĩa vụ thì phải chịu trách nhiệm dân sự đối với bên có quyền.
+
+Vi phạm nghĩa vụ là việc bên có nghĩa vụ không thực hiện nghĩa vụ đúng thời hạn, thực hiện không đầy đủ nghĩa vụ hoặc thực hiện không đúng nội dung của nghĩa vụ.
+
+---
+
+[2] Bộ Luật Dân Sự – Điều 3 (Các nguyên tắc cơ bản của pháp luật dân sự), Khoản 5 (tương đồng: 0.61)
+Chương I (NHỮNG QUY ĐỊNH CHUNG) Điều 3 Các nguyên tắc cơ bản của pháp luật dân sự Khoản 5:
+5. Cá nhân, pháp nhân phải tự chịu trách nhiệm về việc không thực hiện hoặc thực hiện không đúng nghĩa vụ dân sự.
+
+---
+
+[3] Bộ Luật Dân Sự – Điều 13 (Bồi thường thiệt hại) (tương đồng: 0.64)
+Chương II (XÁC LẬP, THỰC HIỆN VÀ BẢO VỆ QUYỀN DÂN SỰ) Điều 13 Bồi thường thiệt hại:
+Cá nhân, pháp nhân có quyền dân sự bị xâm phạm được bồi thường toàn bộ thiệt hại, trừ trường hợp các bên có thỏa thuận khác hoặc luật có quy định khác.
+
+---
+
+[4] Bộ Luật Dân Sự – Điều 10 (Giới hạn việc thực hiện quyền dân sự), Khoản 2 (tương đồng: 0.63)
+Chương II (XÁC LẬP, THỰC HIỆN VÀ BẢO VỆ QUYỀN DÂN SỰ) Điều 10 Giới hạn việc thực hiện quyền dân sự Khoản 2:
+2. Trường hợp cá nhân, pháp nhân không tuân thủ quy định tại khoản 1 Điều này thì Tòa án hoặc cơ quan có thẩm quyền khác căn cứ vào tính chất, hậu quả của hành vi vi phạm mà có thể không bảo vệ một phần hoặc toàn bộ quyền của họ, buộc bồi thường nếu gây thiệt hại và có thể áp dụng chế tài khác do luật quy định.
+
+---
+
+[5] Bộ Luật Dân Sự – Điều 599 (Bồi thường thiệt hại do người dưới mười lăm tuổi, người mất năng lực hành vi dân sự gây ra trong thời gian trường học, bệnh viện, pháp nhân khác trực tiếp quản lý), Khoản 2 (tương đồng: 0.62)
+Chương XX (TRÁCH NHIỆM BỒI THƯỜNG THIỆT HẠI NGOÀI HỢP ĐỒNG) Điều 599 Bồi thường thiệt hại do người dưới mười lăm tuổi, người mất năng lực hành vi dân sự gây ra trong thời gian trường học, bệnh viện, pháp nhân khác trực tiếp quản lý Khoản 2:
+2. Người mất năng lực hành vi dân sự gây thiệt hại cho người khác trong thời gian bệnh viện, pháp nhân khác trực tiếp quản lý thì bệnh viện, pháp nhân khác phải bồi thường thiệt hại xảy ra.
+
+CÂU HỎI: luật dan sự phạt ai

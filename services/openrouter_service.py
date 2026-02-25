@@ -11,13 +11,13 @@ load_dotenv()
 CHAT_MODEL = os.getenv("OPENROUTER_CHAT_MODEL", "openrouter/auto")
 
 
-def get_llm(temperature: float = 0.2) -> ChatOpenAI:
+def get_llm(temperature: float = 0.2, model_name: str | None = None) -> ChatOpenAI:
     """
     Trả về LangChain ChatOpenAI trỏ đến OpenRouter.
     Dùng trong LCEL chain.
     """
     return ChatOpenAI(
-        model=CHAT_MODEL,
+        model=model_name or CHAT_MODEL,
         temperature=temperature,
         openai_api_key=os.getenv("OPENROUTER_API_KEY", ""),
         openai_api_base="https://openrouter.ai/api/v1",

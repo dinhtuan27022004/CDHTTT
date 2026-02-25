@@ -28,11 +28,7 @@ RE_CLAUSE  = re.compile(r"^(\d+)[\.\)]\s+", re.MULTILINE)
 def _make_meta_from_filename(filename: str) -> dict[str, Any]:
     law_name = re.sub(r"\.(pdf|docx|doc)$", "", filename, flags=re.IGNORECASE).strip()
     return {
-        "law_name":       law_name,
-        "law_code":       None,
-        "document_type":  None,
-        "issuing_body":   None,
-        "field":          None,
+        "law_name": law_name,
     }
 
 
@@ -168,11 +164,9 @@ def _build_chunks_from_hierarchy(
                 chunks.append({
                     **meta,
                     "chapter": chapter_label,
-                    "section": None,
                     "article": art_num,
                     "article_name": art_title,
                     "clause": cls_num,
-                    "point": None,
                     "content": f"{header}:\n{sub_p}",
                     "chunk_id": shared_chunk_id,
                     "chunk_index": chunk_idx,
@@ -207,7 +201,6 @@ def _text_to_chunks(text: str, meta: dict[str, Any]) -> list[dict[str, Any]]:
                 "article": None, 
                 "article_name": None,
                 "clause": None, 
-                "point": None,
                 "content": f"[{meta['law_name']}] Đoạn {i+1}:\n{t}",
                 "chunk_id": shared_chunk_id, 
                 "chunk_index": i, 

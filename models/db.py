@@ -37,18 +37,12 @@ def init_db():
 
             -- Văn bản
             law_name    TEXT NOT NULL,
-            law_code    TEXT,
-            document_type TEXT,
-            issuing_body  TEXT,
-            field         TEXT,
 
             -- Cấu trúc
             chapter     TEXT,
-            section     TEXT,
             article     INT,
             article_name TEXT,
             clause      INT,
-            point       TEXT,
 
             -- Nội dung
             content     TEXT NOT NULL,

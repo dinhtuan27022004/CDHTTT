@@ -17,6 +17,11 @@ def render_chat_main() -> None:
         with st.chat_message(role, avatar="🙋" if role == "user" else "⚖️"):
             st.markdown(msg["content"])
 
+            # 🚀 Hiển thị Expanded Query (Nếu có)
+            if role == "assistant" and msg.get("search_query"):
+                with st.expander("🛠️ Chi tiết truy vấn mở rộng (Query Expansion)", expanded=False):
+                    st.info(f"**Truy vấn đã dùng:**\n{msg['search_query']}")
+
             # Candidates TRƯỚC rerank
             if role == "assistant" and msg.get("candidates"):
                 with st.expander(f"🔍 {len(msg['candidates'])} ứng viên Vector Search (trước Rerank)", expanded=False):
@@ -34,7 +39,7 @@ def render_chat_main() -> None:
                         if cls: ref += f", Khoản {cls}"
                         
                         st.markdown(
-                            f"**{i}.** `sim={sim:.2f}` &nbsp; **{ref}**\n\n{c.get('content', '')}",
+                            f"**{i}.** <span style='color:red; font-weight:bold;'>{sim:.2f}</span> &nbsp; **{ref}**\n\n{c.get('content', '')}",
                             unsafe_allow_html=True,
                         )
 
@@ -45,9 +50,9 @@ def render_chat_main() -> None:
                         zip(msg["citations"], msg.get("chunks", [])), 1
                     ):
                         rerank_score = chunk.get("rerank_score")
-                        score_text = f"`rerank={rerank_score:.2f}`" if rerank_score is not None else ""
+                        score_html = f"<span style='color:red; font-weight:bold;'>{rerank_score:.2f}</span>" if rerank_score is not None else ""
                         st.markdown(
-                            f"**{i}.** {score_text} &nbsp; **{citation}**\n\n{chunk.get('content', '')}",
+                            f"**{i}.** {score_html} &nbsp; **{citation}**\n\n{chunk.get('content', '')}",
                             unsafe_allow_html=True,
                         )
 
@@ -72,8 +77,8 @@ def _handle_question(question: str) -> None:
     # Thêm tin nhắn user
     st.session_state.messages.append({"role": "user", "content": question})
 
-    # Gọi controller (hiển thị spinner)
-    with st.spinner("Đang tìm kiếm và tổng hợp…"):
+    # Gọi controller (hiển thị spinner cho bước retrieval)
+    with st.spinner("Đang tìm kiếm và xử lý dữ liệu..."):
         result = ask_law_question(question)
 
     if result.get("error"):
@@ -85,11 +90,36 @@ def _handle_question(question: str) -> None:
             "error":     result["error"],
         })
     else:
+        # Hiển thị tin nhắn assistant (Không Streaming)
+        with st.chat_message("assistant", avatar="⚖️"):
+            full_answer = result["answer"]
+            st.markdown(full_answer)
+            
+            if result.get("search_query"):
+                with st.expander("🛠️ Chi tiết truy vấn mở rộng (Query Expansion)", expanded=False):
+                    st.info(f"**Truy vấn đã dùng:**\n{result['search_query']}")
+            
+            if result.get("candidates"):
+                with st.expander(f"🔍 {len(result['candidates'])} ứng viên Vector Search (trước Rerank)", expanded=False):
+                    for i, c in enumerate(result["candidates"], 1):
+                        sim = c.get("similarity", 0)
+                        ref = c.get("law_name", "")
+                        if c.get("article"): ref += f" – Điều {c['article']}"
+                        st.markdown(f"**{i}.** <span style='color:red; font-weight:bold;'>{sim:.2f}</span> &nbsp; **{ref}**\n\n{c.get('content', '')}", unsafe_allow_html=True)
+
+            if result.get("citations"):
+                with st.expander(f"📚 Xem {len(result['citations'])} điều luật tham khảo (sau Rerank)"):
+                    for i, (citation, chunk) in enumerate(zip(result["citations"], result.get("chunks", [])), 1):
+                        rerank_score = chunk.get("rerank_score", 0)
+                        st.markdown(f"**{i}.** <span style='color:red; font-weight:bold;'>{rerank_score:.2f}</span> &nbsp; **{citation}**\n\n{chunk.get('content', '')}", unsafe_allow_html=True)
+
+        # Lưu vào session state
         st.session_state.messages.append({
-            "role":       "assistant",
-            "content":    result["answer"],
-            "citations":  result.get("citations", []),
-            "chunks":     result.get("chunks", []),
-            "candidates": result.get("candidates", []),
-            "error":      None,
+            "role":         "assistant",
+            "content":      full_answer,
+            "citations":    result.get("citations", []),
+            "chunks":       result.get("chunks", []),
+            "candidates":   result.get("candidates", []),
+            "search_query": result.get("search_query"),
+            "error":        None,
         })

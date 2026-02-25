@@ -18,32 +18,20 @@ def insert_chunk(chunk: dict[str, Any]) -> None:
     sql = """
         INSERT INTO law_documents (
             law_name, 
-            law_code, 
-            document_type, 
-            issuing_body, 
-            field,
             chapter, 
-            section, 
             article, 
             article_name, 
             clause, 
-            point,
             content,
             chunk_id, 
             chunk_index, 
             embedding
         ) VALUES (
             %(law_name)s, 
-            %(law_code)s, 
-            %(document_type)s, 
-            %(issuing_body)s, 
-            %(field)s,
             %(chapter)s, 
-            %(section)s, 
             %(article)s, 
             %(article_name)s, 
             %(clause)s, 
-            %(point)s,
             %(content)s,
             %(chunk_id)s, 
             %(chunk_index)s, 
@@ -74,32 +62,36 @@ def insert_chunk(chunk: dict[str, Any]) -> None:
 
 def vector_search(
     query_embedding: list[float],
-    top_k: int = 5,
+    top_k: int = 100,
+    threshold: float = 0.0,
 ) -> list[dict[str, Any]]:
     """
-    Tìm kiếm top-K chunks gần nhất bằng cosine similarity.
+    Tìm kiếm top-K chunks gần nhất bằng cosine similarity và lọc theo ngưỡng.
 
     Args:
-        query_embedding: Vector câu hỏi (1536-dim).
-        field: Lĩnh vực luật cần lọc (None = tất cả).
-        top_k: Số kết quả trả về.
+        query_embedding: Vector câu hỏi.
+        top_k: Số kết quả tối đa trước khi lọc.
+        threshold: Ngưỡng tương đồng tối thiểu (0.0 đến 1.0).
 
     Returns:
         Danh sách dict chứa thông tin từng chunk.
     """
-    params: list[Any] = [str(query_embedding), str(query_embedding), top_k]
+    params: list[Any] = [str(query_embedding), str(query_embedding), threshold, top_k]
 
     sql = f"""
         SELECT
             id, 
-            law_name, law_code, document_type, issuing_body, field,
-            chapter, article, article_name, clause, point, content,
+            law_name,
+            chapter, article, article_name, clause, content,
             1 - (embedding <=> %s::vector) AS similarity
         FROM law_documents
         WHERE embedding IS NOT NULL
+          AND (1 - (embedding <=> %s::vector)) >= %s
         ORDER BY embedding <=> %s::vector
         LIMIT %s;
     """
+    # Lưu ý: %s xuất hiện 3 lần cho embedding, ta cần 4 params
+    params = [str(query_embedding), str(query_embedding), threshold, str(query_embedding), top_k]
 
     conn = get_connection()
     try:
@@ -167,8 +159,8 @@ def keyword_search(
     sql = f"""
         SELECT
             id,
-            law_name, law_code, document_type, issuing_body, field,
-            chapter, article, article_name, clause, point, content,
+            law_name,
+            chapter, article, article_name, clause, content,
             1.0::float AS similarity
         FROM law_documents
         WHERE {where_clause}
@@ -184,5 +176,48 @@ def keyword_search(
         cur.close()
         print(f"🔑 Keyword search: tìm thấy {len(rows)} chunk khớp chính xác.")
         return rows
+    finally:
+        conn.close()
+
+
+def check_chunk_exists(
+    law_name: str,
+    chapter: str | None = None,
+    article: int | None = None,
+    clause: int | None = None,
+) -> bool:
+    """
+    Kiểm tra xem chunk đã tồn tại trong DB chưa dựa trên law_name, chapter, article, clause.
+    """
+    conn = get_connection()
+    try:
+        cur = conn.cursor()
+        
+        # Xây dựng câu lệnh WHERE linh hoạt cho các giá trị None
+        sql = "SELECT 1 FROM law_documents WHERE law_name = %s"
+        params = [law_name]
+        
+        if chapter:
+            sql += " AND chapter = %s"
+            params.append(chapter)
+        else:
+            sql += " AND chapter IS NULL"
+            
+        if article:
+            sql += " AND article = %s"
+            params.append(article)
+        else:
+            sql += " AND article IS NULL"
+            
+        if clause:
+            sql += " AND clause = %s"
+            params.append(clause)
+        else:
+            sql += " AND clause IS NULL"
+            
+        cur.execute(sql, params)
+        exists = cur.fetchone() is not None
+        cur.close()
+        return exists
     finally:
         conn.close()
