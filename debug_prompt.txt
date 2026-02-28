@@ -7,42 +7,47 @@ System: Bạn là **trợ lý pháp lý AI** chuyên về luật Việt Nam, h�
    - Nếu một câu trả lời dùng nhiều điều, liệt kê tất cả các nguồn.
 3. Nếu CONTEXT không đủ thông tin để trả lời toàn bộ câu hỏi người dùng, hãy phản hồi đúng một câu: *"Không tìm thấy trong dữ liệu luật hiện có."*
 4. Nếu CONTEXT chỉ đủ thông tin để trả lời một phần của câu hỏi người dùng, hãy trả lời phần có thể và phần còn lại thừa nhận không tìm thấy thông tin và tuyệt đối không bịa.
-4. Không suy luận về hậu quả pháp lý nếu context không đề cập rõ ràng.
+
+4. Không suy luận về hậu quả pháp lý nếu CONTEXT không đề cập rõ ràng.
 5. Đối với các câu hỏi ngắn hoặc chỉ chứa từ khóa (v dụ: "bạo lực gia đình", "trốn thuế"), hãy hiểu người dùng đang muốn hỏi về các quy định liên quan, các hành vi vi phạm và mức xử phạt (bị phạt như thế nào, có bị phạt không). Hãy trình bày tổng quan dựa trên CONTEXT.
+6. Nếu nội dung CONTEXT đủ để trả lời câu hỏi của người dùng, hãy trả lời đầy đủ và tận dụng tối đa context, bổ sung thêm các kiến thức liên quan đến câu hỏi từ CONTEXT (nếu có).
 ## PHONG CÁCH TRẢ LỜI:
 - Ngôn ngữ: **Tiếng Việt**, trang trọng, rõ ràng.
 - Cấu trúc: Dùng gạch đầu dòng hoặc đánh số nếu câu trả lời có nhiều ý.
-- Ngắn gọn, súc tích: Tránh lặp lại nội dung của câu hỏi.
+- Ngắn gọn, súc tích, đầy đủ: Tránh lặp lại nội dung của câu hỏi.
 - Kết thúc mỗi câu trả lời bằng phần **📌 Nguồn tham khảo:**.
 Human: CONTEXT:
-[1] Bộ Luật Dân Sự – Điều 351 (Trách nhiệm dân sự do vi phạm nghĩa vụ), Khoản 1 (tương đồng: 0.65)
-Chương XV (QUY ĐỊNH CHUNG) Điều 351 Trách nhiệm dân sự do vi phạm nghĩa vụ Khoản 1:
-1. Bên có nghĩa vụ mà vi phạm nghĩa vụ thì phải chịu trách nhiệm dân sự đối với bên có quyền.
+[1] Bộ Luật Dân Sự – Điều 466 (Nghĩa vụ trả nợ của bên vay), Khoản 5 (tương đồng: 0.67)
+Chương XVI (MỘT SỐ HỢP ĐỒNG THÔNG DỤNG) Điều 466 Nghĩa vụ trả nợ của bên vay Khoản 5:
+5. Trường hợp vay có lãi mà khi đến hạn bên vay không trả hoặc trả không đầy đủ thì bên vay phải trả lãi như sau:
 
-Vi phạm nghĩa vụ là việc bên có nghĩa vụ không thực hiện nghĩa vụ đúng thời hạn, thực hiện không đầy đủ nghĩa vụ hoặc thực hiện không đúng nội dung của nghĩa vụ.
+a) Lãi trên nợ gốc theo lãi suất thỏa thuận trong hợp đồng tương ứng với thời hạn vay mà đến hạn chưa trả; trường hợp chậm trả thì còn phải trả lãi theo mức lãi suất quy định tại khoản 2 Điều 468 của Bộ luật này;
 
----
-
-[2] Bộ Luật Dân Sự – Điều 3 (Các nguyên tắc cơ bản của pháp luật dân sự), Khoản 5 (tương đồng: 0.61)
-Chương I (NHỮNG QUY ĐỊNH CHUNG) Điều 3 Các nguyên tắc cơ bản của pháp luật dân sự Khoản 5:
-5. Cá nhân, pháp nhân phải tự chịu trách nhiệm về việc không thực hiện hoặc thực hiện không đúng nghĩa vụ dân sự.
+b) Lãi trên nợ gốc quá hạn chưa trả bằng 150% lãi suất vay theo hợp đồng tương ứng với thời gian chậm trả, trừ trường hợp có thỏa thuận khác.
 
 ---
 
-[3] Bộ Luật Dân Sự – Điều 13 (Bồi thường thiệt hại) (tương đồng: 0.64)
-Chương II (XÁC LẬP, THỰC HIỆN VÀ BẢO VỆ QUYỀN DÂN SỰ) Điều 13 Bồi thường thiệt hại:
-Cá nhân, pháp nhân có quyền dân sự bị xâm phạm được bồi thường toàn bộ thiệt hại, trừ trường hợp các bên có thỏa thuận khác hoặc luật có quy định khác.
+[2] Bộ Luật Dân Sự – Điều 466 (Nghĩa vụ trả nợ của bên vay), Khoản 4 (tương đồng: 0.67)
+Chương XVI (MỘT SỐ HỢP ĐỒNG THÔNG DỤNG) Điều 466 Nghĩa vụ trả nợ của bên vay Khoản 4:
+4. Trường hợp vay không có lãi mà khi đến hạn bên vay không trả nợ hoặc trả không đầy đủ thì bên cho vay có quyền yêu cầu trả tiền lãi với mức lãi suất theo quy định tại khoản 2 Điều 468 của Bộ luật này trên số tiền chậm trả tương ứng với thời gian chậm trả, trừ trường hợp có thỏa thuận khác hoặc luật có quy định khác.
 
 ---
 
-[4] Bộ Luật Dân Sự – Điều 10 (Giới hạn việc thực hiện quyền dân sự), Khoản 2 (tương đồng: 0.63)
-Chương II (XÁC LẬP, THỰC HIỆN VÀ BẢO VỆ QUYỀN DÂN SỰ) Điều 10 Giới hạn việc thực hiện quyền dân sự Khoản 2:
-2. Trường hợp cá nhân, pháp nhân không tuân thủ quy định tại khoản 1 Điều này thì Tòa án hoặc cơ quan có thẩm quyền khác căn cứ vào tính chất, hậu quả của hành vi vi phạm mà có thể không bảo vệ một phần hoặc toàn bộ quyền của họ, buộc bồi thường nếu gây thiệt hại và có thể áp dụng chế tài khác do luật quy định.
+[3] Luật Hình sự – Điều 380 (Tội không chấp hành án), Khoản 1 (tương đồng: 0.61)
+Chương XXIV (CÁC TỘI XÂM PHẠM HOẠT ĐỘNG TƯ PHÁP) Điều 380 Tội không chấp hành án Khoản 1:
+1. Người nào có điều kiện mà không chấp hành bản án hoặc quyết định của Tòa án đã có hiệu lực pháp luật mặc dù đã bị áp dụng biện pháp cưỡng chế theo quy định của pháp luật hoặc đã bị xử phạt vi phạm hành chính về hành vi này mà còn vi phạm, thì bị phạt tù từ 03 tháng đến 02 năm.
 
 ---
 
-[5] Bộ Luật Dân Sự – Điều 599 (Bồi thường thiệt hại do người dưới mười lăm tuổi, người mất năng lực hành vi dân sự gây ra trong thời gian trường học, bệnh viện, pháp nhân khác trực tiếp quản lý), Khoản 2 (tương đồng: 0.62)
-Chương XX (TRÁCH NHIỆM BỒI THƯỜNG THIỆT HẠI NGOÀI HỢP ĐỒNG) Điều 599 Bồi thường thiệt hại do người dưới mười lăm tuổi, người mất năng lực hành vi dân sự gây ra trong thời gian trường học, bệnh viện, pháp nhân khác trực tiếp quản lý Khoản 2:
-2. Người mất năng lực hành vi dân sự gây thiệt hại cho người khác trong thời gian bệnh viện, pháp nhân khác trực tiếp quản lý thì bệnh viện, pháp nhân khác phải bồi thường thiệt hại xảy ra.
+[4] Bộ Luật Dân Sự – Điều 466 (Nghĩa vụ trả nợ của bên vay), Khoản 2 (tương đồng: 0.63)
+Chương XVI (MỘT SỐ HỢP ĐỒNG THÔNG DỤNG) Điều 466 Nghĩa vụ trả nợ của bên vay Khoản 2:
+2. Trường hợp bên vay không thể trả vật thì có thể trả bằng tiền theo trị giá của vật đã vay tại địa điểm và thời điểm trả nợ, nếu được bên cho vay đồng ý.
 
-CÂU HỎI: luật dan sự phạt ai
+---
+
+[5] Bộ Luật Dân Sự – Điều 440 (Nghĩa vụ trả tiền), Khoản 3 (tương đồng: 0.65)
+Chương XVI (MỘT SỐ HỢP ĐỒNG THÔNG DỤNG) Điều 440 Nghĩa vụ trả tiền Khoản 3:
+3. Trường hợp bên mua không thực hiện đúng nghĩa vụ trả tiền thì phải trả lãi trên số tiền chậm trả theo quy định tại Điều 357 của Bộ luật này.
+
+CÂU HỎI: 
+nợ mà không trả thì bị gì?

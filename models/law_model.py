@@ -49,8 +49,8 @@ def insert_chunk(chunk: dict[str, Any]) -> None:
             conn.rollback()
             # Xem SQL thực tế (mogrify)
             full_sql = cur.mogrify(sql, chunk).decode('utf-8')
-            print(f"\n❌ LỖI INSERT: {e}")
-            print(f"--- SQL: {full_sql[:500]}...")
+            print(f"|-- Error INSERT: {e}", flush=True)
+            print(f"|-- SQL: {full_sql[:500]}...", flush=True)
             raise e
         finally:
             cur.close()
@@ -100,7 +100,7 @@ def vector_search(
         cols = [desc[0] for desc in cur.description]
         rows = [dict(zip(cols, row)) for row in cur.fetchall()]
         cur.close()
-        print(f"✅ Tìm thấy {len(rows)} kết quả.")
+        print(f"|-- Vector Search found {len(rows)} results.", flush=True)
         import json
         with open("result.json", "w", encoding="utf-8") as f:
             json.dump(rows, f, indent=4, ensure_ascii=False)
@@ -174,7 +174,7 @@ def keyword_search(
         cols = [desc[0] for desc in cur.description]
         rows = [dict(zip(cols, row)) for row in cur.fetchall()]
         cur.close()
-        print(f"🔑 Keyword search: tìm thấy {len(rows)} chunk khớp chính xác.")
+        print(f"|-- Keyword search found {len(rows)} exact matches.", flush=True)
         return rows
     finally:
         conn.close()

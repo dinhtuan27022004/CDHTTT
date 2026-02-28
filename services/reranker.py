@@ -14,9 +14,9 @@ import streamlit as st
 def _get_reranker():
     """Load model một lần duy nhất và giữ lại trong bộ nhớ Streamlit."""
     from sentence_transformers import CrossEncoder
-    print(f"⏳ Đang tải Reranker model: {RERANKER_MODEL}...")
+    print(f"--- Loading Reranker model: {RERANKER_MODEL}...", flush=True)
     model = CrossEncoder(RERANKER_MODEL, max_length=512)
-    print(f"✅ Reranker đã sẵn sàng.")
+    print(f"--- Reranker is ready.", flush=True)
     return model
 
 

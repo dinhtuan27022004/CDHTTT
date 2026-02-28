@@ -7,34 +7,49 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from services.openrouter_service import get_llm
 
-EXPANSION_PROMPT = ChatPromptTemplate.from_messages([
+SIMILAR_QUESTIONS_PROMPT = ChatPromptTemplate.from_messages([
     ("system", """Bạn là chuyên gia ngôn ngữ pháp lý Việt Nam. 
-Nhiệm vụ của bạn là lấy một câu hỏi của người dùng và mở rộng nó bằng các thuật ngữ đồng nghĩa, các khái niệm tương đương với các từ khóa trong câu hỏi, mở rộng các câu hỏi ngắn, thiếu.
+Nhiệm vụ của bạn là lấy một câu hỏi của người dùng và viết lại nó thành 5 câu hỏi khác nhau nhưng có cùng ý nghĩa nội dung.
 
 QUY TẮC:
-1. Trả về một chuỗi duy nhất chứa các từ mở rộng (không lặp lại câu gốc).
-2. Tập trung vào các thuật ngữ chuyên môn có khả năng xuất hiện trong văn bản luật và phải đảm bảo liên quan tới câu hỏi người dùng.
-3. KHÔNG trả lời câu hỏi, chỉ mở rộng từ khóa.
-4. Trả về kết quả dưới dạng danh sách từ khóa cách nhau bởi dấu phẩy hoặc khoảng trắng.
-5. không mở rộng các từ khóa không liên quan tới câu hỏi người dùng.
+1. Trả về đúng 5 câu hỏi, mỗi câu trên một dòng.
+2. Các câu hỏi phải đa dạng về cách dùng từ nhưng giữ nguyên ý nghĩa cốt lõi của câu hỏi gốc.
+3. Tập trung vào các thuật ngữ chuyên môn có khả năng xuất hiện trong văn bản luật.
+4. KHÔNG trả lời câu hỏi, chỉ viết lại câu hỏi.
+5. Chỉ trả về các câu hỏi, không thêm bất kỳ văn bản giải thích nào khác.
+
 Ví dụ:
-Input: "lấy trộm xe máy"
-Output: "trộm cắp tài sản, chiếm đoạt tài sản, tội trộm cắp"
+Input: "lấy trộm xe máy bị phạt thế nào?"
+Output:
+Xử lý hành vi trộm cắp xe gắn máy như thế nào?
+Hình phạt cho tội chiếm đoạt xe máy là gì?
+Mức án đối với hành vi trộm xe máy được quy định ra sao?
+Tội trộm cắp tài sản là xe máy bị xử lý pháp luật như thế nào?
+Quy định về việc xử phạt hành vi lấy cắp xe máy?
 """),
     ("human", "{question}")
 ])
 
-def expand_query_for_search(question: str) -> str:
+def generate_similar_questions(question: str) -> list[str]:
     """
-    Sử dụng LLM (model nhanh + ổn định) để sinh ra các thuật ngữ đồng nghĩa.
+    Sử dụng LLM để viết lại câu hỏi thành 5 biến thể khác nhau.
+    Trả về list gồm [câu hỏi gốc, biến thể 1, ..., biến thể 5]
     """
+    questions = [question]
     try:
-        # Sử dụng gpt-4o-mini vì Gemini Flash đang gặp lỗi endpoint 404 trên OpenRouter
         llm = get_llm(model_name="openai/gpt-4o-mini")
-        chain = EXPANSION_PROMPT | llm | StrOutputParser()
-        expanded = chain.invoke({"question": question})
-        print(f"🚀 Expanded Query: {expanded}")
-        return f"{question} {expanded.strip()}"
+        chain = SIMILAR_QUESTIONS_PROMPT | llm | StrOutputParser()
+        response = chain.invoke({"question": question})
+        
+        # Tách các dòng và làm sạch
+        lines = [line.strip() for line in response.strip().split('\n') if line.strip()]
+        
+        # Chỉ lấy tối đa 5 biến thể đầu tiên
+        variants = lines[:5]
+        questions.extend(variants)
+        
+        print(f"|-- Generated {len(variants)} similar questions", flush=True)
+        return questions
     except Exception as e:
-        print(f"⚠️ Query Expansion error: {e}")
-        return question
+        print(f"|-- Warning: Query Expansion error: {e}", flush=True)
+        return questions

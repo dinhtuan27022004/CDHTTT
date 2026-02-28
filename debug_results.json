@@ -1,57 +1,57 @@
 [
     {
-        "id": 2344,
+        "id": 2608,
         "law_name": "Bộ Luật Dân Sự",
-        "chapter": "Chương XV",
-        "article": 351,
-        "article_name": "Trách nhiệm dân sự do vi phạm nghĩa vụ",
-        "clause": 1,
-        "content": "Chương XV (QUY ĐỊNH CHUNG) Điều 351 Trách nhiệm dân sự do vi phạm nghĩa vụ Khoản 1:\n1. Bên có nghĩa vụ mà vi phạm nghĩa vụ thì phải chịu trách nhiệm dân sự đối với bên có quyền.\n\nVi phạm nghĩa vụ là việc bên có nghĩa vụ không thực hiện nghĩa vụ đúng thời hạn, thực hiện không đầy đủ nghĩa vụ hoặc thực hiện không đúng nội dung của nghĩa vụ.",
-        "similarity": 0.6496101811412103,
-        "rerank_score": 0.5372348427772522
-    },
-    {
-        "id": 1481,
-        "law_name": "Bộ Luật Dân Sự",
-        "chapter": "Chương I",
-        "article": 3,
-        "article_name": "Các nguyên tắc cơ bản của pháp luật dân sự",
+        "chapter": "Chương XVI",
+        "article": 466,
+        "article_name": "Nghĩa vụ trả nợ của bên vay",
         "clause": 5,
-        "content": "Chương I (NHỮNG QUY ĐỊNH CHUNG) Điều 3 Các nguyên tắc cơ bản của pháp luật dân sự Khoản 5:\n5. Cá nhân, pháp nhân phải tự chịu trách nhiệm về việc không thực hiện hoặc thực hiện không đúng nghĩa vụ dân sự.",
-        "similarity": 0.6085255379363584,
-        "rerank_score": 0.44789808988571167
+        "content": "Chương XVI (MỘT SỐ HỢP ĐỒNG THÔNG DỤNG) Điều 466 Nghĩa vụ trả nợ của bên vay Khoản 5:\n5. Trường hợp vay có lãi mà khi đến hạn bên vay không trả hoặc trả không đầy đủ thì bên vay phải trả lãi như sau:\n\na) Lãi trên nợ gốc theo lãi suất thỏa thuận trong hợp đồng tương ứng với thời hạn vay mà đến hạn chưa trả; trường hợp chậm trả thì còn phải trả lãi theo mức lãi suất quy định tại khoản 2 Điều 468 của Bộ luật này;\n\nb) Lãi trên nợ gốc quá hạn chưa trả bằng 150% lãi suất vay theo hợp đồng tương ứng với thời gian chậm trả, trừ trường hợp có thỏa thuận khác.",
+        "similarity": 0.6704114675521851,
+        "rerank_score": 0.4875192940235138
     },
     {
-        "id": 1515,
+        "id": 2607,
         "law_name": "Bộ Luật Dân Sự",
-        "chapter": "Chương II",
-        "article": 13,
-        "article_name": "Bồi thường thiệt hại",
-        "clause": null,
-        "content": "Chương II (XÁC LẬP, THỰC HIỆN VÀ BẢO VỆ QUYỀN DÂN SỰ) Điều 13 Bồi thường thiệt hại:\nCá nhân, pháp nhân có quyền dân sự bị xâm phạm được bồi thường toàn bộ thiệt hại, trừ trường hợp các bên có thỏa thuận khác hoặc luật có quy định khác.",
-        "similarity": 0.6381710577556201,
-        "rerank_score": 0.3102075457572937
+        "chapter": "Chương XVI",
+        "article": 466,
+        "article_name": "Nghĩa vụ trả nợ của bên vay",
+        "clause": 4,
+        "content": "Chương XVI (MỘT SỐ HỢP ĐỒNG THÔNG DỤNG) Điều 466 Nghĩa vụ trả nợ của bên vay Khoản 4:\n4. Trường hợp vay không có lãi mà khi đến hạn bên vay không trả nợ hoặc trả không đầy đủ thì bên cho vay có quyền yêu cầu trả tiền lãi với mức lãi suất theo quy định tại khoản 2 Điều 468 của Bộ luật này trên số tiền chậm trả tương ứng với thời gian chậm trả, trừ trường hợp có thỏa thuận khác hoặc luật có quy định khác.",
+        "similarity": 0.6655744512550372,
+        "rerank_score": 0.3479401767253876
     },
     {
-        "id": 1505,
+        "id": 1357,
+        "law_name": "Luật Hình sự",
+        "chapter": "Chương XXIV",
+        "article": 380,
+        "article_name": "Tội không chấp hành án",
+        "clause": 1,
+        "content": "Chương XXIV (CÁC TỘI XÂM PHẠM HOẠT ĐỘNG TƯ PHÁP) Điều 380 Tội không chấp hành án Khoản 1:\n1. Người nào có điều kiện mà không chấp hành bản án hoặc quyết định của Tòa án đã có hiệu lực pháp luật mặc dù đã bị áp dụng biện pháp cưỡng chế theo quy định của pháp luật hoặc đã bị xử phạt vi phạm hành chính về hành vi này mà còn vi phạm, thì bị phạt tù từ 03 tháng đến 02 năm.",
+        "similarity": 0.6087803477775854,
+        "rerank_score": 0.32145199179649353
+    },
+    {
+        "id": 2605,
         "law_name": "Bộ Luật Dân Sự",
-        "chapter": "Chương II",
-        "article": 10,
-        "article_name": "Giới hạn việc thực hiện quyền dân sự",
+        "chapter": "Chương XVI",
+        "article": 466,
+        "article_name": "Nghĩa vụ trả nợ của bên vay",
         "clause": 2,
-        "content": "Chương II (XÁC LẬP, THỰC HIỆN VÀ BẢO VỆ QUYỀN DÂN SỰ) Điều 10 Giới hạn việc thực hiện quyền dân sự Khoản 2:\n2. Trường hợp cá nhân, pháp nhân không tuân thủ quy định tại khoản 1 Điều này thì Tòa án hoặc cơ quan có thẩm quyền khác căn cứ vào tính chất, hậu quả của hành vi vi phạm mà có thể không bảo vệ một phần hoặc toàn bộ quyền của họ, buộc bồi thường nếu gây thiệt hại và có thể áp dụng chế tài khác do luật quy định.",
-        "similarity": 0.6263257638410289,
-        "rerank_score": 0.28970640897750854
+        "content": "Chương XVI (MỘT SỐ HỢP ĐỒNG THÔNG DỤNG) Điều 466 Nghĩa vụ trả nợ của bên vay Khoản 2:\n2. Trường hợp bên vay không thể trả vật thì có thể trả bằng tiền theo trị giá của vật đã vay tại địa điểm và thời điểm trả nợ, nếu được bên cho vay đồng ý.",
+        "similarity": 0.6288219843890693,
+        "rerank_score": 0.17214833199977875
     },
     {
-        "id": 2934,
+        "id": 2552,
         "law_name": "Bộ Luật Dân Sự",
-        "chapter": "Chương XX",
-        "article": 599,
-        "article_name": "Bồi thường thiệt hại do người dưới mười lăm tuổi, người mất năng lực hành vi dân sự gây ra trong thời gian trường học, bệnh viện, pháp nhân khác trực tiếp quản lý",
-        "clause": 2,
-        "content": "Chương XX (TRÁCH NHIỆM BỒI THƯỜNG THIỆT HẠI NGOÀI HỢP ĐỒNG) Điều 599 Bồi thường thiệt hại do người dưới mười lăm tuổi, người mất năng lực hành vi dân sự gây ra trong thời gian trường học, bệnh viện, pháp nhân khác trực tiếp quản lý Khoản 2:\n2. Người mất năng lực hành vi dân sự gây thiệt hại cho người khác trong thời gian bệnh viện, pháp nhân khác trực tiếp quản lý thì bệnh viện, pháp nhân khác phải bồi thường thiệt hại xảy ra.",
-        "similarity": 0.6171770507938573,
-        "rerank_score": 0.24607938528060913
+        "chapter": "Chương XVI",
+        "article": 440,
+        "article_name": "Nghĩa vụ trả tiền",
+        "clause": 3,
+        "content": "Chương XVI (MỘT SỐ HỢP ĐỒNG THÔNG DỤNG) Điều 440 Nghĩa vụ trả tiền Khoản 3:\n3. Trường hợp bên mua không thực hiện đúng nghĩa vụ trả tiền thì phải trả lãi trên số tiền chậm trả theo quy định tại Điều 357 của Bộ luật này.",
+        "similarity": 0.6497260332107544,
+        "rerank_score": 0.17143630981445312
     }
 ]
